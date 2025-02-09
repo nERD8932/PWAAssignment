@@ -1,33 +1,84 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import { useEffect, useRef, useState } from 'react'
+import Logo from '/icons/favicon.svg'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const [tasks, setTasks] = useState<Record<string, string>>({})
+
+  const taskRef = useRef<HTMLInputElement>(null);
+
+  const handelDelete = (key) =>{
+    localStorage.removeItem(key)
+    let copytasks = {...tasks}
+    delete copytasks[key]
+    setTasks(copytasks)
+  }
+
+  const readTasks = () => {
+    var i=0;
+    while(localStorage.key(i) != null)
+    {
+      let key = localStorage.key(i)
+      let txt = localStorage.getItem(key??"")
+      setTasks({...tasks, [key]:txt})
+      i++;
+    }
+  }
+
+  useEffect(() => {
+    readTasks()
+  }, [])
+
+  const Normalizer = () => {
+    var key
+    var txt
+    var list = []
+
+    for(key in tasks)
+    {
+      txt = tasks[key]
+      list.push(<li className="listelement" key={key}>{txt}<button className='danger' onClick={() => {handelDelete(key)}}>Delete</button></li>)
+    }
+    console.log(list)
+    return list;
+  }
+
+  const handleSubmit = () => {
+    if(taskRef.current?.value !== "" && taskRef.current?.value !== null && taskRef.current?.value !== undefined)
+    {
+      let key = taskRef.current.value
+      let txt = taskRef.current.value
+      if(localStorage.getItem(key)!=null)
+      {
+        key += "_"
+      }
+      localStorage.setItem(key, txt)
+      setTasks({...tasks, [key]:txt})
+    }
+  }
 
   return (
     <>
       <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
+        <a href="https://github.com/nERD8932/PWAAssignment" target="_blank">
+          <img src={Logo} className="logo" alt="Notes Logo" />
         </a>
       </div>
-      <h1>Vite + React</h1>
+      <h1>Notes App</h1>
       <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+        <form  id="todoform" className="todoform">
+          <input id="forminput" className="forminput" name="todo" type="text" placeholder='Enter a new Note or Task' ref={taskRef}/>
+        </form>
+        <button className="submitbutton" type="button" form="todoform" onClick={handleSubmit}>
+            Add Todo
         </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <div className='card'>
+        <ul id="todos" className="list">
+          { Normalizer() }
+        </ul>
+      </div>
     </>
   )
 }

@@ -3,6 +3,7 @@
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
+  font-smooth: always;
 }
 
 .logo {
@@ -12,10 +13,67 @@
   transition: filter 300ms;
 }
 .logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+  filter: drop-shadow(0 0 2em #95ca66);
 }
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+
+.card{
+  width: 30rem;
+  font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
+
+.todoform{
+  width: 90%;
+  margin: auto;
+}
+
+.list {
+  list-style-type: none;
+  padding: 0.5rem;
+  margin: auto;
+}
+
+.danger {
+  background-color: #d66363;
+  padding: 0.2rem;
+  border-radius: 2rem;
+  margin-left: auto;
+}
+
+.listelement {
+  display: flex;
+  text-align: left;
+  justify-content: center;
+  margin: auto;
+  background: #383838;
+  border-radius: 2rem;
+  padding: 0.75rem;
+  outline: 1px solid white
+}
+
+.forminput{
+  padding: 0.5rem 1rem;
+  margin: auto;
+  font-size: medium;
+  width: 90%;
+  border-radius: 1rem;
+  outline: none;
+  border: none;
+}
+
+.forminput:focus{
+  outline: none;
+  border: none;
+}
+
+.submitbutton{
+  margin: 2rem;
+  font-size: small;
+}
+
+.submitbutton:hover{
+  filter: drop-shadow(0 0 5px #95ca66);
+  outline-color: #95ca66;
+  border-color: #95ca66;
 }
 
 @keyframes logo-spin {
