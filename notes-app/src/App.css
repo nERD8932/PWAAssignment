@@ -1,14 +1,31 @@
 #root {
-  max-width: 1280px;
+  display: flex;
+  flex-flow: row warp;
   margin: 0 auto;
+  width:100vw;
+  height:100vh;
   padding: 2rem;
   text-align: center;
   font-smooth: always;
 }
 
+.one{
+  width:50%;
+  display: flex;
+  flex-direction: column;
+  margin:auto
+}
+
+.two {
+  width:50%;
+  display: flex;
+  flex-direction: column;
+  margin:auto 0px;
+}
+
 .logo {
   height: 6em;
-  padding: 1.5em;
+  padding: 1.5rem;
   will-change: filter;
   transition: filter 300ms;
 }
@@ -17,8 +34,10 @@
 }
 
 .card{
-  width: 30rem;
+  width: 100%;
   font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
 }
 
 .todoform{
@@ -29,7 +48,12 @@
 .list {
   list-style-type: none;
   padding: 0.5rem;
-  margin: auto;
+  margin: auto 0px;
+}
+
+.scrollable{
+  overflow: scroll;
+  height: 33%;
 }
 
 .danger {
@@ -44,6 +68,7 @@
   text-align: left;
   justify-content: center;
   margin: auto;
+  margin-top: 0.5rem;
   background: #383838;
   border-radius: 2rem;
   padding: 0.75rem;
@@ -66,7 +91,8 @@
 }
 
 .submitbutton{
-  margin: 2rem;
+  margin: auto;
+  width: 6rem;
   font-size: small;
 }
 

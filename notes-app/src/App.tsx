@@ -8,7 +8,7 @@ function App() {
 
   const taskRef = useRef<HTMLInputElement>(null);
 
-  const handelDelete = (key) =>{
+  const handelDelete = (key:string) =>{
     localStorage.removeItem(key)
     let copytasks = {...tasks}
     delete copytasks[key]
@@ -19,9 +19,12 @@ function App() {
     var i=0;
     while(localStorage.key(i) != null)
     {
-      let key = localStorage.key(i)
+      let key:string = localStorage.key(i)?? ""
       let txt = localStorage.getItem(key??"")
-      setTasks({...tasks, [key]:txt})
+      setTasks(prev => ({
+        ...prev,
+        [key]: txt ?? "" // Replace null with an empty string
+    }));
       i++;
     }
   }
@@ -31,7 +34,7 @@ function App() {
   }, [])
 
   const Normalizer = () => {
-    var key
+    var key:string
     var txt
     var list = []
 
@@ -49,7 +52,7 @@ function App() {
     {
       let key = taskRef.current.value
       let txt = taskRef.current.value
-      if(localStorage.getItem(key)!=null)
+      while(localStorage.getItem(key)!=null)
       {
         key += "_"
       }
@@ -60,24 +63,26 @@ function App() {
 
   return (
     <>
-      <div>
+      <div className='one'>
         <a href="https://github.com/nERD8932/PWAAssignment" target="_blank">
           <img src={Logo} className="logo" alt="Notes Logo" />
         </a>
+        <h1>Notes App</h1>
+        <div className="card">
+          <form  id="todoform" className="todoform" onSubmit={e => { e.preventDefault(); handleSubmit();}}>
+            <input id="forminput" className="forminput" name="todo" type="text" placeholder='Enter a new Note or Task' ref={taskRef}/>
+          </form>
+          <button className="submitbutton" type="button" form="todoform" onClick={handleSubmit}>
+              Add Todo
+          </button>
+        </div>
       </div>
-      <h1>Notes App</h1>
-      <div className="card">
-        <form  id="todoform" className="todoform">
-          <input id="forminput" className="forminput" name="todo" type="text" placeholder='Enter a new Note or Task' ref={taskRef}/>
-        </form>
-        <button className="submitbutton" type="button" form="todoform" onClick={handleSubmit}>
-            Add Todo
-        </button>
-      </div>
-      <div className='card'>
-        <ul id="todos" className="list">
-          { Normalizer() }
-        </ul>
+      <div className='two'>
+        <div className='card scrollable'>
+          <ul id="todos" className="list">
+            { Normalizer() }
+          </ul>
+        </div>
       </div>
     </>
   )
